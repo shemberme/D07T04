@@ -1,16 +1,3 @@
-/*
-    Search module for the desired value from data array.
-
-    Returned value must be:
-        - "even"
-        - ">= mean"
-        - "<= mean + 3 * sqrt(variance)"
-        - "!= 0"
-
-        OR
-
-        0
-*/
 #include <stdio.h>
 #include <math.h>
 #define NMAX 30
@@ -33,16 +20,30 @@ int main() {
     return 0;
 }
 
-// Ввод массива
+// Ввод массива с проверкой лишних символов
 int input(int *a, int *n) {
+    char next_char;
+    
+    // Читаем количество элементов
     if (scanf("%d", n) != 1 || *n <= 0 || *n > NMAX) {
         return 1;
     }
+    
+    // Читаем элементы массива
     for (int i = 0; i < *n; i++) {
         if (scanf("%d", &a[i]) != 1) {
             return 1;
         }
     }
+    
+    // Проверяем, что после последнего элемента нет лишних символов
+    // кроме пробела или переноса строки
+    if (scanf("%c", &next_char) == 1) {
+        if (next_char != ' ' && next_char != '\n') {
+            return 1; // Найден лишний символ
+        }
+    }
+    
     return 0;
 }
 
@@ -83,6 +84,3 @@ int search(int *a, int n) {
     }
     return 0; // Если ничего не найдено
 }
-
-
-
